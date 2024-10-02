@@ -1,8 +1,12 @@
 ﻿using System;
 
-public class Class1
+namespace SampleApp.Library.Models;
+
+public class ResponseResult
 {
-	public Class1()
-	{
-	}
+	public string _message { get; set; } = null!;
+
+	public object _data { get; set; } = null!;
+
+	public bool _result { get; set; }
 }

@@ -1,25 +1,18 @@
 ﻿using System;
 
+namespace SampleApp.Library.Models;
+
 public class Product
 {
-    private Guid _productId;
+    private Guid ProductId { get; } = Guid.NewGuid();
 
-    public string Name { get; set; } = null!;
+    public string Name { get; private set; } = null!;
 
-    public int Price { get; set; }
+    public int Price { get; private set; }
 
-    public Guid ItemId
-    {
-        get
-        {
-            _productId = Guid.NewGuid();
-            return _productId;
-        }
-        set { _productId = value; }
-    }
 
     public override string ToString()
     {
-        return $"Item: {Name} || Price: {Price} || ItemID: {ItemId}";
+        return $"Item: {Name} || Price: {Price} || ProductId: {ProductId}";
     }
 }

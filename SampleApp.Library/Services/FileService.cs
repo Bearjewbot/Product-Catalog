@@ -1,8 +1,21 @@
 ﻿using System;
+using System.Text.Json;
+using SampleApp.Library.Models;
 
-public class Class1
+namespace SampleApp.Library.Services;
+
+public class FileService
 {
-	public Class1()
-	{
-	}
+    internal List<Product> ReadFromFile(string filePath)
+    {
+        var jsonString = File.ReadAllText(filePath);
+        List<Product> jsonList = JsonSerializer.Deserialize<List<Product>>(jsonString)!;
+        return jsonList;
+    }
+    internal void WriteToFile(string fileName, List<Product> products)
+    {
+        String jsonString = JsonSerializer.Serialize(products);
+        File.WriteAllText(fileName, jsonString);
+    }
+
 }
