@@ -39,10 +39,16 @@
 
             <CarouselView
                 x:Name="listContacts"
+                BackgroundColor="Aqua"
+                WidthRequest="400"
+                Scale="200"
                 >
                 <CarouselView.ItemTemplate>
-                    
-                    
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}">
+                            
+                        </TextCell>
+                    </DataTemplate>
                 </CarouselView.ItemTemplate>
 
 

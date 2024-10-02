@@ -1,12 +1,13 @@
-﻿using SampleApp.Library;
+﻿using SampleApp.Library.Services;
 
 namespace Maui.Client;
 
 
 
     public partial class MainPage : ContentPage
-    {  
-        
+    {
+
+        ProductService productservice = new();
 
        
 
@@ -14,6 +15,7 @@ namespace Maui.Client;
         {
             InitializeComponent();
 
+            listContacts.ItemsSource = productservice.GetAllProducts();
             
         }
 

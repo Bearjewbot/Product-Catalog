@@ -6,13 +6,13 @@ namespace SampleApp.Library.Services;
 
 public class FileService
 {
-    internal List<Product> ReadFromFile(string filePath)
+    public List<Product> ReadFromFile(string filePath)
     {
         var jsonString = File.ReadAllText(filePath);
         List<Product> jsonList = JsonSerializer.Deserialize<List<Product>>(jsonString)!;
         return jsonList;
     }
-    internal void WriteToFile(string fileName, List<Product> products)
+    public void WriteToFile(string fileName, List<Product> products)
     {
         String jsonString = JsonSerializer.Serialize(products);
         File.WriteAllText(fileName, jsonString);

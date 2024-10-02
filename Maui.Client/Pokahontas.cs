@@ -2,16 +2,21 @@
 
 namespace Maui.Client
 {
-    class Pokahontas
+    public class Pokahontas
 
     {
 
-        
-        public static void Whatever()
+        FileService fileService = new();
+
+
+
+        public void Whatever()
         {
-            
-            
-                //FileSystem.AppDataDirectory();
-        }
+
+                            
+
+
+        //FileSystem.AppDataDirectory();
+    }
     }
 }
