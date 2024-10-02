@@ -9,7 +9,7 @@ namespace Maui.Client
         
         public static void Whatever()
         {
-            FileService.
+            
             
                 //FileSystem.AppDataDirectory();
         }

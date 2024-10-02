@@ -4,11 +4,11 @@ namespace SampleApp.Library.Models;
 
 public class Product
 {
-    private Guid ProductId { get; } = Guid.NewGuid();
+    public string ProductId { get; } = Guid.NewGuid().ToString();
 
-    public string Name { get; private set; } = null!;
+    public string Name { get; set; } = null!;
 
-    public int Price { get; private set; }
+    public int Price { get; set; }
 
 
     public override string ToString()

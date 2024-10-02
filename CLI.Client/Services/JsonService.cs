@@ -1,6 +1,6 @@
 using System;
 using System.Text.Json;
-using CLI.Client.Models;
+using SampleApp.Library.Models;
 
 namespace CLI.Client.Services;
 

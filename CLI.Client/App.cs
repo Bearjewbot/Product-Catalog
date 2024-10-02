@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
-using CLI.Client.Models;
 using CLI.Client.Services;
+using SampleApp.Library.Models;
 
 namespace CLI.Client;
 

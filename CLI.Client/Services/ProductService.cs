@@ -1,4 +1,4 @@
-using CLI.Client.Models;
+using SampleApp.Library.Models;
 
 namespace CLI.Client.Services;
 
@@ -30,16 +30,16 @@ public class ProductService
 
     public int DeleteProductById(Guid id)
     {
-        return _items.RemoveAll(product => product.ItemId.Equals(id));
+        return _items.RemoveAll(product => product.ProductId.Equals(id));
     }
 
     public void ChangeProductById(string name, int price, Guid id)
     {
-        int index = _items.FindIndex(product => product.ItemId.Equals(id));
+        int index = _items.FindIndex(product => product.ProductId.Equals(id));
 
         if (index != -1) 
         {
-            _items.Insert(index, new Product() { Name = name, Price = price, ItemId = id});
+            _items.Insert(index, new Product() { Name = name, Price = price }); //ProductId = id});
         }
     }
 
