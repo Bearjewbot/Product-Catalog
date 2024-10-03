@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Xml.Linq;
 using SampleApp.Library.Models;
 
 namespace SampleApp.Library.Services;
@@ -52,7 +54,7 @@ public class ProductService
     }
 
     public IEnumerable<Product> GetAllProducts()
-    {
+    { 
         return _items;
     }
 

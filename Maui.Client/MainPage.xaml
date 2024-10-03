@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:SampleApp.Library.Models;assembly=SampleApp.Library"
              x:Class="Maui.Client.MainPage"
              
              Title="Product Catalog">
@@ -8,8 +9,8 @@
     <ScrollView>
         <VerticalStackLayout
             Padding="30,0"
-            Spacing="25">
-
+            Spacing="25"
+            Margin="50">
 
             <Label  
                 Text="Add the necessary information below to add a product to the catalog."
@@ -17,12 +18,14 @@
                 />
 
             <Entry
+                x:Name="input_Name"
                 WidthRequest="400"
                 Placeholder="Product Name"
-                
-                    />
-
+                />
+            
+            
             <Entry
+                  x:Name="input_Price" x:DataType="x:Int32"
                   WidthRequest="400"
                   Placeholder="Product Price"                     
                 />
@@ -37,22 +40,24 @@
                     HorizontalOptions="Fill" />
 
 
-            <CarouselView
+            <ListView
                 x:Name="listContacts"
-                BackgroundColor="Aqua"
-                WidthRequest="400"
-                Scale="200"
+                BackgroundColor="Transparent"
                 >
-                <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Name}">
-                            
+                <ListView.ItemTemplate>
+                    <DataTemplate
+                        x:DataType="models:Product">
+                        <TextCell
+                            Text="{Binding Name}" 
+                            Detail="{Binding Price}">
+
+
                         </TextCell>
                     </DataTemplate>
-                </CarouselView.ItemTemplate>
+                </ListView.ItemTemplate>
 
 
-            </CarouselView>
+            </ListView>
                 
 
 
