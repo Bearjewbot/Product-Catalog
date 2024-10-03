@@ -22,8 +22,8 @@
                 WidthRequest="400"
                 Placeholder="Product Name"
                 />
-            
-            
+
+
             <Entry
                   x:Name="input_Price" x:DataType="x:Int32"
                   WidthRequest="400"
@@ -39,30 +39,50 @@
                     WidthRequest="100"
                     HorizontalOptions="Fill" />
 
+            <Label
+                Text="Products"
+                FontSize="Large"
+                HorizontalOptions="Center"
+                />
 
             <ListView
                 x:Name="listContacts"
                 BackgroundColor="Transparent"
+                WidthRequest="400"
+                ItemSelected="listContacts_ItemSelected"
                 >
                 <ListView.ItemTemplate>
                     <DataTemplate
                         x:DataType="models:Product">
-                        <TextCell
-                            Text="{Binding Name}" 
-                            Detail="{Binding Price}">
-
-
-                        </TextCell>
+                        <ViewCell>
+                            <VerticalStackLayout>
+                                <Frame
+                                    BorderColor="Gray"
+                                    CornerRadius="1">
+                                    <Grid> 
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="1"
+                                           Text="{Binding Name}"
+                                           FontAttributes="Bold" />
+                                        <Label Grid.Row="1"
+                                           Grid.Column="1"
+                                           Text="{Binding Price}"
+                                           FontAttributes="Italic"
+                                           VerticalOptions="End" />
+                                    </Grid>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
-
             </ListView>
-                
-
-
-
-
         </VerticalStackLayout>
     </ScrollView>
 
