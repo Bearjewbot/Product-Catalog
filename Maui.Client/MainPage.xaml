@@ -11,8 +11,14 @@
             Padding="30,0"
             Spacing="25"
             Margin="50">
+<!--
+Padding & Margin 
+50 (all)
+50,50 (horizontal, vertical)
+50,50,50,50 (left, top, right, bottom)
+ -->
 
-            <Label  
+            <Label 
                 Text="Add the necessary information below to add a product to the catalog."
                 WidthRequest="300"
                 />
@@ -35,50 +41,54 @@
                     x:Name="btnAddProduct"
                     Text="Add"
                     SemanticProperties.Hint="Opens upp a view where the user can add a product."
-                    Clicked="btnAddProduct_Clicked"
+                    Clicked="BtnAddProduct_Clicked"
                     WidthRequest="100"
                     HorizontalOptions="Fill" />
 
             <Label
-                Text="Products"
+                Text="Product List"
                 FontSize="Large"
                 HorizontalOptions="Center"
+                Margin="0,50,0,0"
                 />
 
             <ListView
                 x:Name="listContacts"
                 BackgroundColor="Transparent"
-                WidthRequest="400"
-                ItemSelected="listContacts_ItemSelected"
-                >
+                WidthRequest="400">
                 <ListView.ItemTemplate>
                     <DataTemplate
                         x:DataType="models:Product">
                         <ViewCell>
-                            <VerticalStackLayout>
-                                <Frame
+                            <Frame
                                     BorderColor="Gray"
                                     CornerRadius="1">
-                                    <Grid> 
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="1"
-                                           Text="{Binding Name}"
-                                           FontAttributes="Bold" />
-                                        <Label Grid.Row="1"
-                                           Grid.Column="1"
+
+                                <Grid ColumnDefinitions="*,80"
+                                          RowDefinitions="*,*">
+
+                                    <Label Grid.Row="0" Grid.Column="0"
+                                        Text="{Binding Name}"
+                                        FontAttributes="Bold"
+ 
+                                         />
+
+                                    <Label Grid.Row="1"
+                                           Grid.Column="0"
                                            Text="{Binding Price}"
-                                           FontAttributes="Italic"
-                                           VerticalOptions="End" />
-                                    </Grid>
-                                </Frame>
-                            </VerticalStackLayout>
+                                           FontAttributes="None"
+                                           VerticalOptions="End"
+                                           />
+
+                                    <Button
+                                        Grid.Column="1" Grid.RowSpan="2"
+                                        Text="Delete"
+                                        Clicked="BtnDeleteProduct_Clicked"
+                                        BackgroundColor="Red"
+                                         />
+
+                                </Grid>
+                            </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

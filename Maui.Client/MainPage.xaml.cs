@@ -1,5 +1,4 @@
-﻿using SampleApp.Library.Models;
-using SampleApp.Library.Services;
+﻿using SampleApp.Library.Services;
 
 namespace Maui.Client;
 
@@ -17,32 +16,40 @@ public partial class MainPage : ContentPage
         InitializeComponent();
 
 
-        List<Product> products = new() {new Product
-        {
-            Name = "John",
-            Price = 300
 
 
-        }};
-
-        listContacts.ItemsSource = products;
+        //listContacts.ItemsSource = products;
         //listContacts.ItemsSource = productservice.GetAllProducts();
 
     }
 
-    private void btnAddProduct_Clicked(object sender, EventArgs e)
+    private void BtnAddProduct_Clicked(object sender, EventArgs e)
     {
 
-        if (input_Name.Text != null && input_Price.Text != null!)
+        if (string.IsNullOrWhiteSpace(input_Name.Text))
         {
-            //productservice.AddProduct(input_Name.Text, input_Price.Text); 
+            DisplayAlert("Error", "You have to fill in the name in order to add a product.", "Try again");
+        }
+        else if ()
+        {
+
+        }
+        else if (!(double.TryParse(input_Price.Text, out double price)))
+        {
+            DisplayAlert("Error", "You have to fill in a price with numbers in order to add a product.", "Try again");
+        }
+        else
+        {
+            productservice.AddProduct(input_Name.Text, price);
+            listContacts.ItemsSource = productservice.GetAllProducts();
+            input_Name.Text = "";
+            input_Price.Text = "";
 
         }
 
-
     }
 
-    private void listContacts_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+    private void BtnDeleteProduct_Clicked(object sender, EventArgs e)
     {
 
     }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Xml.Linq;
-using SampleApp.Library.Models;
+﻿using SampleApp.Library.Models;
 
 namespace SampleApp.Library.Services;
 
@@ -9,11 +6,9 @@ public class ProductService
 {
     private List<Product> _items = [];
 
-    public void AddProduct(string name, int price)
+    public void AddProduct(string name, double price)
     {
-        bool doesProductExist = _items.Exists(Product => Product.Name.Equals(name));
-
-        if (!doesProductExist)
+        if (!DoesProductExist(name))
         {
             _items.Add(new Product
             {
@@ -21,9 +16,6 @@ public class ProductService
                 Price = price,
             });
         }
-
-        else
-            Console.WriteLine("You can't add a product which already exists.");
     }
 
     public void AddProducts(List<Product> products)
@@ -38,8 +30,8 @@ public class ProductService
 
     public void ChangeProductById(string name, int price, string id)
     {
-        
-        
+
+
         int index = _items.FindIndex(product => product.ProductId.Equals(id));
 
         if (index != -1)
@@ -54,9 +46,13 @@ public class ProductService
     }
 
     public IEnumerable<Product> GetAllProducts()
-    { 
+    {
         return _items;
     }
 
+    public bool DoesProductExist(string name)
+    {
+        return _items.Exists(Product => Product.Name.Equals(name));
+    }
 
 }
