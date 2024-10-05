@@ -52,7 +52,7 @@ public class ProductService
 
     public bool DoesProductExist(string name)
     {
-        return _items.Exists(Product => Product.Name.Equals(name));
+        return _items.Exists(Product => Product.Name.Equals(name.Trim()));
     }
 
 }
