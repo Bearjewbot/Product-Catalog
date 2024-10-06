@@ -23,7 +23,7 @@ public class ProductService
         _items.AddRange(products);
     }
 
-    public int DeleteProductById(Guid id)
+    public int DeleteProductById(string id)
     {
         return _items.RemoveAll(product => product.ProductId.Equals(id));
     }

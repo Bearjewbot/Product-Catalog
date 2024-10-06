@@ -2,9 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:SampleApp.Library.Models;assembly=SampleApp.Library"
+             xmlns:viewModels="clr-namespace:Maui.Client.ViewModels"
              x:Class="Maui.Client.MainPage"
-             
+             x:DataType="viewModels:ProductListViewModel"
              Title="Product Catalog">
+
 
     <ScrollView>
         <VerticalStackLayout
@@ -24,24 +26,24 @@ Padding & Margin
                 />
 
             <Entry
-                x:Name="input_Name"
+                Text="{Binding Name}"
                 WidthRequest="400"
                 Placeholder="Product Name"
                 />
 
 
             <Entry
-                  x:Name="input_Price" x:DataType="x:Int32"
+                  Text="{Binding Price}"
                   WidthRequest="400"
                   Placeholder="Product Price"                     
                 />
 
 
             <Button
-                    x:Name="btnAddProduct"
+                    
                     Text="Add"
                     SemanticProperties.Hint="Opens upp a view where the user can add a product."
-                    Clicked="BtnAddProduct_Clicked"
+                    Command="{Binding AddCommand}"
                     WidthRequest="100"
                     HorizontalOptions="Fill" />
 
@@ -58,16 +60,24 @@ Padding & Margin
             
 
             <ListView
-                x:Name="listContacts"
+                ItemsSource="{Binding Products}"                
                 BackgroundColor="Transparent"
                 WidthRequest="400">
                 <ListView.ItemTemplate>
                     <DataTemplate
                         x:DataType="models:Product">
                         <ViewCell>
+                           
+
                             <Frame
                                     BorderColor="Gray"
                                     CornerRadius="1">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command=""
+                                        NumberOfTapsRequired="1"
+                                        />
+                                </Frame.GestureRecognizers>
 
                                 <Grid ColumnDefinitions="*,80"
                                           RowDefinitions="*,*">
@@ -84,14 +94,16 @@ Padding & Margin
                                            FontAttributes="None"
                                            VerticalOptions="End"
                                            />
-
+                                    
                                     <Button
                                         Grid.Column="1" Grid.RowSpan="2"
                                         Text="Delete"
-                                        Clicked="BtnDeleteProduct_Clicked"
                                         BackgroundColor="Red"
-                                        Command="{Binding Source={x:Reference listView}, Path=BindingContext.DeleteCommand}"
-                                        CommandParameter="{Binding}" />
+                                        Command="{Binding 
+                                          Source={RelativeSource 
+                                          AncestorType={x:Type viewModels:ProductListViewModel}}, 
+                                          Path=DeleteCommand}"
+                                        CommandParameter="{Binding .}"/>
                                        
                                 </Grid>
                             </Frame>
