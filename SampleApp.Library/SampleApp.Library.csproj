@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Services\IProductService" />
+    <None Remove="Services\NewFile1.txt" />
+  </ItemGroup>
+
 </Project>

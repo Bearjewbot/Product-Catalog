@@ -70,4 +70,16 @@
 	  <ProjectReference Include="..\SampleApp.Library\SampleApp.Library.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Views\ProductListPage.xaml.cs">
+	    <DependentUpon>ProductListPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\EditProductPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

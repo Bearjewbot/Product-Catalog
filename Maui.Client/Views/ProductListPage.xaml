@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:SampleApp.Library.Models;assembly=SampleApp.Library"
              xmlns:viewModels="clr-namespace:Maui.Client.ViewModels"
-             x:Class="Maui.Client.MainPage"
+             x:Class="Maui.Client.Views.ProductListPage"
              x:DataType="viewModels:ProductListViewModel"
              Title="Product Catalog">
 
@@ -74,12 +74,12 @@ Padding & Margin
                                     CornerRadius="1">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer 
-                                        Command=""
+                                        
                                         NumberOfTapsRequired="1"
                                         />
                                 </Frame.GestureRecognizers>
 
-                                <Grid ColumnDefinitions="*,80"
+                                <Grid ColumnDefinitions="*,80,80"
                                           RowDefinitions="*,*">
 
                                     <Label Grid.Row="0" Grid.Column="0"
@@ -94,9 +94,20 @@ Padding & Margin
                                            FontAttributes="None"
                                            VerticalOptions="End"
                                            />
-                                    
-                                    <Button
+
+                                    <Button 
                                         Grid.Column="1" Grid.RowSpan="2"
+                                        Margin="0,0,5,0"
+                                        Text="Update"
+                                        BackgroundColor="Green"
+                                        Command="{Binding 
+                                          Source={RelativeSource
+                                          AncestorType={x:Type viewModels:ProductListViewModel}},
+                                          Path=UpdateProductCommand}"
+                                        CommandParameter="{Binding .}"/>
+
+                                    <Button
+                                        Grid.Column="2" Grid.RowSpan="2"
                                         Text="Delete"
                                         BackgroundColor="Red"
                                         Command="{Binding 

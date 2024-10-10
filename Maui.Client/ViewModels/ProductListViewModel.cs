@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Maui.Client.Views;
 
 // View - MainPage.xaml
 // ViewModel - ProductListViewModel
@@ -13,7 +14,7 @@ namespace Maui.Client.ViewModels;
 
 public class ProductListViewModel : INotifyPropertyChanged
 {
-    private ProductService productservice = new();
+    private IProductService productservice;
 
     public ObservableCollection<Product> Products { get; }
 
@@ -41,13 +42,16 @@ public class ProductListViewModel : INotifyPropertyChanged
 
     public ICommand AddCommand { get; }
     public ICommand DeleteCommand { get; }
-
-    public ProductListViewModel()
+    public ICommand UpdateProductCommand { get; }
+    
+    public ProductListViewModel(IProductService productService)
     {
+        productservice = productService;
         Products = [];
 
         AddCommand = new Command(AddProduct);
         DeleteCommand = new Command<Product>(DeleteProduct);
+        UpdateProductCommand = new Command<Product>(NavigateToEditProductPage);
     }
 
     public void OnAppearing()
@@ -94,6 +98,11 @@ public class ProductListViewModel : INotifyPropertyChanged
         PopulateProducts();
     }
 
+    public async void NavigateToEditProductPage(Product product)
+    {
+        await AppShell.Current.GoToAsync($"{nameof(EditProductPage)}?{nameof(Product.ProductId)}={product.ProductId}");
+    }
+
     private void PopulateProducts()
     {
         Product[] fetchedProducts = productservice.GetAllProducts().ToArray();
@@ -105,6 +114,6 @@ public class ProductListViewModel : INotifyPropertyChanged
         }
     }
 
-    
+
 
 }

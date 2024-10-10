@@ -1,17 +1,17 @@
 ﻿using Maui.Client.ViewModels;
 
-namespace Maui.Client;
+namespace Maui.Client.Views;
 
-public partial class MainPage : ContentPage
+public partial class ProductListPage : ContentPage
 {
     private ProductListViewModel _viewModel;
 
-    public MainPage()
+    public ProductListPage(ProductListViewModel viewModel)
     {
         InitializeComponent();
-        _viewModel = new ProductListViewModel();
+        _viewModel = viewModel;
         BindingContext = _viewModel;
-        
+
     }
 
     protected override void OnAppearing()
