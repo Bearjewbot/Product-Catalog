@@ -35,19 +35,17 @@ public class ProductService : IProductService
 
     public void UpdateProductById(string name, double price, string id)
     {
-
-
         int index = _items.FindIndex(product => product.ProductId.Equals(id));
 
-        if (index != -1)
+        if (name)
         {
+
+        }
+        else if (index != -1)
+        {
+            _items.RemoveAll(product => product.ProductId.Equals(id));
             _items.Insert(index, new Product() { Name = name, Price = price, ProductId = id });
         }
-    }
-
-    public void PrintList()
-    {
-        _items.ForEach(product => Console.WriteLine(product));
     }
 
     public IEnumerable<Product> GetAllProducts()

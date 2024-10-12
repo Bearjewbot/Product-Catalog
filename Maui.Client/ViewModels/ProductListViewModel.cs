@@ -1,10 +1,9 @@
-﻿using SampleApp.Library.Models;
-using SampleApp.Library.Services;
+﻿using Maui.Client.Views;
+using SampleApp.Library.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Maui.Client.Views;
 
 // View - MainPage.xaml
 // ViewModel - ProductListViewModel
@@ -14,11 +13,11 @@ namespace Maui.Client.ViewModels;
 
 public class ProductListViewModel : INotifyPropertyChanged
 {
-    private IProductService productservice;
+    private IProductService productService;
 
     public ObservableCollection<Product> Products { get; }
 
-    private string _name = string.Empty;
+    private string _name = null!;
     public string Name
     {
         get => _name;
@@ -29,7 +28,7 @@ public class ProductListViewModel : INotifyPropertyChanged
         }
     }
 
-    private string _price = string.Empty;
+    private string _price = null!;
     public string Price
     {
         get => _price;
@@ -43,10 +42,10 @@ public class ProductListViewModel : INotifyPropertyChanged
     public ICommand AddCommand { get; }
     public ICommand DeleteCommand { get; }
     public ICommand UpdateProductCommand { get; }
-    
-    public ProductListViewModel(IProductService productService)
+
+    public ProductListViewModel(IProductService _productService)
     {
-        productservice = productService;
+        productService = _productService;
         Products = [];
 
         AddCommand = new Command(AddProduct);
@@ -72,9 +71,9 @@ public class ProductListViewModel : INotifyPropertyChanged
         {
             Shell.Current.DisplayAlert("Error", "You have to fill in the name in order to add a product.", "Try again");
         }
-        else if (productservice.DoesProductExist(Name))
+        else if (productService.DoesProductExist(Name))
         {
-            Shell.Current.DisplayAlert("Error", "You cannot add a product with a name that already exists.", "Try again");
+            Shell.Current.DisplayAlert("Error", "A product with that name already exists.", "Try again");
         }
         else if (!(double.TryParse(Price, out double price)))
         {
@@ -82,8 +81,7 @@ public class ProductListViewModel : INotifyPropertyChanged
         }
         else
         {
-
-            productservice.AddProduct(Name, price);
+            productService.AddProduct(Name.Trim(), price);
 
             Name = "";
             Price = "";
@@ -94,7 +92,7 @@ public class ProductListViewModel : INotifyPropertyChanged
 
     public void DeleteProduct(Product product)
     {
-        productservice.DeleteProductById(product.ProductId);
+        productService.DeleteProductById(product.ProductId);
         PopulateProducts();
     }
 
@@ -105,7 +103,7 @@ public class ProductListViewModel : INotifyPropertyChanged
 
     private void PopulateProducts()
     {
-        Product[] fetchedProducts = productservice.GetAllProducts().ToArray();
+        Product[] fetchedProducts = productService.GetAllProducts().ToArray();
 
         Products.Clear();
         foreach (Product product in fetchedProducts)

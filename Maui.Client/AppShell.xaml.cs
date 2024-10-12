@@ -7,7 +7,6 @@ namespace Maui.Client
         public AppShell()
         {
             InitializeComponent();
-
             Routing.RegisterRoute(nameof(EditProductPage), typeof(EditProductPage));
         }
     }

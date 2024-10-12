@@ -13,12 +13,6 @@
             Padding="30,0"
             Spacing="25"
             Margin="30">
-<!--
-Padding & Margin 
-50 (all)
-50,50 (horizontal, vertical)
-50,50,50,50 (left, top, right, bottom)
- -->
 
             <Label 
                 Text="Add the necessary information below to add a product to the catalog."
@@ -33,31 +27,28 @@ Padding & Margin
 
 
             <Entry
-                  Text="{Binding Price}"
-                  WidthRequest="400"
-                  Placeholder="Product Price"                     
+                Text="{Binding Price}"
+                WidthRequest="400"
+                Placeholder="Product Price"                     
                 />
 
-
             <Button
-                    
-                    Text="Add"
-                    SemanticProperties.Hint="Opens upp a view where the user can add a product."
-                    Command="{Binding AddCommand}"
-                    WidthRequest="100"
-                    HorizontalOptions="Fill" />
+                Text="Add"
+                SemanticProperties.Hint="Opens upp a view where the user can add a product."
+                Command="{Binding AddCommand}"
+                WidthRequest="100"
+                HorizontalOptions="Fill" />
 
             <Label
                 Text="Our products"
-                
                 FontSize="Large"
                 HorizontalOptions="Center"
                 Margin="0,30,0,0"
                 />
 
-            <Label Text="Listed with name and price in euros."
-                   HorizontalTextAlignment="Center"/>
-            
+            <Label 
+                Text="Listed with name and price in euros."
+                HorizontalTextAlignment="Center"/>
 
             <ListView
                 ItemsSource="{Binding Products}"                
@@ -67,32 +58,21 @@ Padding & Margin
                     <DataTemplate
                         x:DataType="models:Product">
                         <ViewCell>
-                           
-
-                            <Frame
-                                    BorderColor="Gray"
-                                    CornerRadius="1">
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer 
-                                        
-                                        NumberOfTapsRequired="1"
-                                        />
-                                </Frame.GestureRecognizers>
-
+                            <Frame BorderColor="Gray" CornerRadius="1">
                                 <Grid ColumnDefinitions="*,80,80"
-                                          RowDefinitions="*,*">
+                                      RowDefinitions="*,*">
 
-                                    <Label Grid.Row="0" Grid.Column="0"
+                                    <Label 
+                                        Grid.Row="0" Grid.Column="0"
                                         Text="{Binding Name}"
                                         FontAttributes="Bold"
- 
                                          />
 
-                                    <Label Grid.Row="1"
-                                           Grid.Column="0"
-                                           Text="{Binding Price}"
-                                           FontAttributes="None"
-                                           VerticalOptions="End"
+                                    <Label 
+                                        Grid.Row="1" Grid.Column="0"
+                                        Text="{Binding Price}"
+                                        FontAttributes="None"
+                                        VerticalOptions="End"
                                            />
 
                                     <Button 
@@ -115,7 +95,6 @@ Padding & Margin
                                           AncestorType={x:Type viewModels:ProductListViewModel}}, 
                                           Path=DeleteCommand}"
                                         CommandParameter="{Binding .}"/>
-                                       
                                 </Grid>
                             </Frame>
                         </ViewCell>
@@ -124,5 +103,4 @@ Padding & Margin
             </ListView>
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
