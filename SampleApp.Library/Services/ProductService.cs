@@ -26,6 +26,7 @@ public class ProductService : IProductService
                 Name = name,
                 Price = price,
             });
+            SaveToFile();
         }
     }
 
@@ -34,9 +35,10 @@ public class ProductService : IProductService
         _items.AddRange(products);
     }
 
-    public int DeleteProductById(string id)
+    public void DeleteProductById(string id)
     {
-        return _items.RemoveAll(product => product.ProductId.Equals(id));
+        _items.RemoveAll(product => product.ProductId.Equals(id));
+        SaveToFile();
     }
 
     public void UpdateProductById(string name, double price, string id)
@@ -47,6 +49,7 @@ public class ProductService : IProductService
         {
             _items.RemoveAll(product => product.ProductId.Equals(id));
             _items.Insert(index, new Product() { Name = name, Price = price, ProductId = id });
+            SaveToFile();
         }
     }
 
@@ -60,7 +63,6 @@ public class ProductService : IProductService
         return _items.Exists(Product => Product.Name.Equals(name.Trim()));
     }
 
-    //This method is called from App code behind on close window.
     public void SaveToFile()
     {
         _fileService.WriteToFile(_items);

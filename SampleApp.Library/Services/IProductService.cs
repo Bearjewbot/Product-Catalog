@@ -8,6 +8,6 @@ public interface IProductService
     void AddProduct(string name, double price);
     void AddProducts(List<Product> products);
     void UpdateProductById(string name, double price, string id);
-    int DeleteProductById(string id);
+    void DeleteProductById(string id);
     void SaveToFile();
 }
