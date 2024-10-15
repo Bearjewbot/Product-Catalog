@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CLI.Client\CLI.Client.csproj" />
+    <ProjectReference Include="..\SampleApp.Library\SampleApp.Library.csproj" />
   </ItemGroup>
 
 </Project>

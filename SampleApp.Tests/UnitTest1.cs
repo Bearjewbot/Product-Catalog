@@ -1,26 +1,30 @@
 namespace SampleApp.Tests;
 
-using CLI.Client.Models;
-using CLI.Client.Services;
-using Xunit.Abstractions;
+using SampleApp.Library.Services;
 
 public class UnitTest1
 {
+
+    private IProductService _productService;
+    public UnitTest1(ProductService productService)
+    {
+        _productService = productService;
+    }
 
     // Skapa ett enkelt enhetstest för att säkerställa att produkter kan läggas till i listan och att listan innehåller 
     // rätt antal produkter efter att en ny produkt lagts till.
 
     [Fact]
-    public void Add_NewProduct_ThenCheck_IfAdded()
+    public void AddNewProduct_Then_CheckIfAdded()
     {
         //Arrange
-        ProductService productService = new();
-        var objectsBeforeAdding = productService.GetAllProducts().ToList().Count;
-        
+
+        var objectsBeforeAdding = _productService.GetAllProducts().ToList().Count;
+
 
         //Act
-        productService.AddProduct("John", 3);
-        var objectsAfterAdding = productService.GetAllProducts().ToList().Count;
+        _productService.AddProduct("John", 3);
+        var objectsAfterAdding = _productService.GetAllProducts().ToList().Count;
 
         //Assert
         Assert.True(objectsAfterAdding == (objectsBeforeAdding + 1));
@@ -31,8 +35,5 @@ public class UnitTest1
     // Att spara och läsa in produkter från fil.
 
 
-    public void RemoveProduct_ThenCheck_IfRemoved()
-    {
-        
-    }
+
 }
