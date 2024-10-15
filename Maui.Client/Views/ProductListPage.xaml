@@ -25,19 +25,21 @@
                 Placeholder="Product Name"
                 />
 
-
             <Entry
                 Text="{Binding Price}"
                 WidthRequest="400"
                 Placeholder="Product Price"                     
                 />
 
+
             <Button
-                Text="Add"
+                Text="Add Product"
                 SemanticProperties.Hint="Opens upp a view where the user can add a product."
                 Command="{Binding AddCommand}"
-                WidthRequest="100"
-                HorizontalOptions="Fill" />
+                WidthRequest="110"
+                BackgroundColor="Green"
+                Margin="0,0,20,0"
+                />
 
             <Label
                 Text="Our products"
@@ -66,13 +68,17 @@
                                         Grid.Row="0" Grid.Column="0"
                                         Text="{Binding Name}"
                                         FontAttributes="Bold"
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="1"
                                          />
 
                                     <Label 
                                         Grid.Row="1" Grid.Column="0"
-                                        Text="{Binding Price}"
+                                        Text="{Binding Price, StringFormat='{0} €'}"
                                         FontAttributes="None"
                                         VerticalOptions="End"
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="1"
                                            />
 
                                     <Button 

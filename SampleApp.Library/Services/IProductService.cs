@@ -9,4 +9,5 @@ public interface IProductService
     void AddProducts(List<Product> products);
     void UpdateProductById(string name, double price, string id);
     int DeleteProductById(string id);
+    void SaveToFile();
 }

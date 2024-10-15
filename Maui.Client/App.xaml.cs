@@ -2,11 +2,20 @@
 {
     public partial class App : Application
     {
-        public App()
+        private readonly IProductService productService;
+
+        public App(IProductService productService)
         {
             InitializeComponent();
 
             MainPage = new AppShell();
+            this.productService = productService;
+        }
+
+        public override void CloseWindow(Window window)
+        {
+            productService.SaveToFile();
+            base.CloseWindow(window);
         }
     }
 }

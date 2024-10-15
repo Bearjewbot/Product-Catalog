@@ -1,21 +1,32 @@
-﻿using System;
+﻿using SampleApp.Library.Models;
 using System.Text.Json;
-using SampleApp.Library.Models;
 
 namespace SampleApp.Library.Services;
 
-public class FileService
+public class FileService : IFileService
 {
-    public List<Product> ReadFromFile(string filePath)
+    private readonly string filePath;
+
+    public FileService(string filePath)
     {
-        var jsonString = File.ReadAllText(filePath);
-        List<Product> jsonList = JsonSerializer.Deserialize<List<Product>>(jsonString)!;
-        return jsonList;
+        this.filePath = filePath;
     }
-    public void WriteToFile(string fileName, List<Product> products)
+
+    public List<Product> ReadFromFile()
+    {
+        if (Path.Exists(filePath))
+        {
+            var jsonString = File.ReadAllText(filePath);
+            List<Product> jsonList = JsonSerializer.Deserialize<List<Product>>(jsonString) ?? [];
+            return jsonList;
+        }
+
+        return [];
+    }
+    public void WriteToFile(List<Product> products)
     {
         String jsonString = JsonSerializer.Serialize(products);
-        File.WriteAllText(fileName, jsonString);
+        File.WriteAllText(filePath, jsonString);
     }
 
 }

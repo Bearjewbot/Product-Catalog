@@ -1,19 +1,17 @@
 ﻿using Maui.Client.Views;
 using SampleApp.Library.Models;
+using SampleApp.Library.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-// View - MainPage.xaml
-// ViewModel - ProductListViewModel
-// Model - ProductService
-
 namespace Maui.Client.ViewModels;
 
 public class ProductListViewModel : INotifyPropertyChanged
 {
-    private IProductService productService;
+    private IProductService _productService;
+    private IFileService _fileService;
 
     public ObservableCollection<Product> Products { get; }
 
@@ -43,18 +41,23 @@ public class ProductListViewModel : INotifyPropertyChanged
     public ICommand DeleteCommand { get; }
     public ICommand UpdateProductCommand { get; }
 
-    public ProductListViewModel(IProductService _productService)
+    public ProductListViewModel(IProductService productService, IFileService fileService)
     {
-        productService = _productService;
+        _productService = productService;
+        _fileService = fileService;
+
         Products = [];
 
         AddCommand = new Command(AddProduct);
         DeleteCommand = new Command<Product>(DeleteProduct);
         UpdateProductCommand = new Command<Product>(NavigateToEditProductPage);
+
     }
+
 
     public void OnAppearing()
     {
+        _productService.AddProducts(_fileService.ReadFromFile());
         PopulateProducts();
     }
 
@@ -71,7 +74,7 @@ public class ProductListViewModel : INotifyPropertyChanged
         {
             Shell.Current.DisplayAlert("Error", "You have to fill in the name in order to add a product.", "Try again");
         }
-        else if (productService.DoesProductExist(Name))
+        else if (_productService.DoesProductExist(Name))
         {
             Shell.Current.DisplayAlert("Error", "A product with that name already exists.", "Try again");
         }
@@ -81,7 +84,7 @@ public class ProductListViewModel : INotifyPropertyChanged
         }
         else
         {
-            productService.AddProduct(Name.Trim(), price);
+            _productService.AddProduct(Name.Trim(), price);
 
             Name = "";
             Price = "";
@@ -92,7 +95,7 @@ public class ProductListViewModel : INotifyPropertyChanged
 
     public void DeleteProduct(Product product)
     {
-        productService.DeleteProductById(product.ProductId);
+        _productService.DeleteProductById(product.ProductId);
         PopulateProducts();
     }
 
@@ -103,7 +106,7 @@ public class ProductListViewModel : INotifyPropertyChanged
 
     private void PopulateProducts()
     {
-        Product[] fetchedProducts = productService.GetAllProducts().ToArray();
+        Product[] fetchedProducts = _productService.GetAllProducts().ToArray();
 
         Products.Clear();
         foreach (Product product in fetchedProducts)
@@ -111,6 +114,8 @@ public class ProductListViewModel : INotifyPropertyChanged
             Products.Add(product);
         }
     }
+
+
 
 
 

@@ -5,6 +5,12 @@ namespace SampleApp.Library.Services;
 public class ProductService : IProductService
 {
     private List<Product> _items = [];
+    private readonly IFileService _fileService;
+
+    public ProductService(IFileService fileService)
+    {
+        _fileService = fileService;
+    }
 
     public Product? GetProductById(string id)
     {
@@ -37,11 +43,7 @@ public class ProductService : IProductService
     {
         int index = _items.FindIndex(product => product.ProductId.Equals(id));
 
-        if (name)
-        {
-
-        }
-        else if (index != -1)
+        if (index != -1)
         {
             _items.RemoveAll(product => product.ProductId.Equals(id));
             _items.Insert(index, new Product() { Name = name, Price = price, ProductId = id });
@@ -58,4 +60,9 @@ public class ProductService : IProductService
         return _items.Exists(Product => Product.Name.Equals(name.Trim()));
     }
 
+    //This method is called from App code behind on close window.
+    public void SaveToFile()
+    {
+        _fileService.WriteToFile(_items);
+    }
 }

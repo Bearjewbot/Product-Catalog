@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
-using SampleApp.Library.Services;
-using Maui.Client.ViewModels;
+﻿using Maui.Client.ViewModels;
 using Maui.Client.Views;
+using Microsoft.Extensions.Logging;
+using SampleApp.Library.Services;
 
 namespace Maui.Client
 {
@@ -18,17 +18,23 @@ namespace Maui.Client
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            // TODO: Create IFileService interface
-            // TODO: Add FileService to depedency injection
+
+
+
+
             builder.Services.AddSingleton<IProductService, ProductService>();
             builder.Services.AddSingleton<ProductListPage>();
             builder.Services.AddSingleton<ProductListViewModel>();
+
+            var baseDirectory = FileSystem.AppDataDirectory;
+            var filePath = Path.Combine(baseDirectory, "ProductList.json");
+            builder.Services.AddSingleton<IFileService, FileService>(serviceProvider => new FileService(filePath));
 
             builder.Services.AddTransient<EditProductPage>();
             builder.Services.AddTransient<EditProductViewModel>();
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
