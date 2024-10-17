@@ -19,9 +19,4 @@ public partial class ProductListPage : ContentPage
         base.OnAppearing();
         _viewModel.OnAppearing();
     }
-
-    private void Button_Clicked(object sender, EventArgs e)
-    {
-        Application.Current.Quit();
-    }
 }

@@ -1,4 +1,5 @@
-﻿using SampleApp.Library.Models;
+﻿using SampleApp.Library.Enums;
+using SampleApp.Library.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -38,7 +39,7 @@ public class EditProductViewModel : INotifyPropertyChanged
         get => _name;
         set
         {
-            _name = value.Trim();
+            _name = value;
             OnPropertyChanged();
         }
     }
@@ -56,31 +57,38 @@ public class EditProductViewModel : INotifyPropertyChanged
 
     public ICommand SaveCommand { get; }
 
+    public ICommand CancelCommand { get; }
+
     public EditProductViewModel(IProductService productService)
     {
         _productService = productService;
         SaveCommand = new Command(SaveProduct);
+        CancelCommand = new Command(ReturnToMainPage);
     }
 
     private async void SaveProduct()
     {
-        if (string.IsNullOrWhiteSpace(Name))
+
+        var result = _productService.UpdateProductById(Name, Price, ProductId);
+
+        if (result == StatusCodes.Failed)
         {
-            await AppShell.Current.DisplayAlert("Error", "You have to fill in the name in order to update a product.", "Try again");
+            await AppShell.Current.DisplayAlert("Error", "There was an error, try to fill in both fields. Only numbers are allowed in the numbers field.", "Close");
         }
-        else if (_productService.DoesProductExist(Name))
+        else if (result == StatusCodes.Exists)
         {
-            await AppShell.Current.DisplayAlert("Error", "A product with that name already exists.", "Try again");
-        }
-        else if (!(double.TryParse(Price, out double price)))
-        {
-            await AppShell.Current.DisplayAlert("Error", "You need to write a price with numbers.", "Try again");
+            await AppShell.Current.DisplayAlert("Error", "A product with that name already exists, try again.", "Close");
         }
         else
         {
-            _productService.UpdateProductById(Name, price, ProductId);
             await AppShell.Current.GoToAsync("..");
         }
+    }
+
+    private async void ReturnToMainPage()
+    {
+        await AppShell.Current.GoToAsync("..");
+
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

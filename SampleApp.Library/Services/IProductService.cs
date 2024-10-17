@@ -1,13 +1,15 @@
-﻿using SampleApp.Library.Models;
+﻿using SampleApp.Library.Enums;
+using SampleApp.Library.Models;
 
 public interface IProductService
 {
     IEnumerable<Product> GetAllProducts();
     Product? GetProductById(string id);
     bool DoesProductExist(string name);
-    void AddProduct(string name, double price);
-    void AddProducts(List<Product> products);
-    void UpdateProductById(string name, double price, string id);
+    StatusCodes AddProduct(string name, string inputPrice);
+    void LoadProductsFromFile(List<Product> products);
+    StatusCodes UpdateProductById(string name, string inputPrice, string id);
     void DeleteProductById(string id);
     void SaveToFile();
+
 }

@@ -1,11 +1,16 @@
-﻿using SampleApp.Library.Models;
+﻿using SampleApp.Library.Enums;
+using SampleApp.Library.Models;
+
 
 namespace SampleApp.Library.Services;
 
+//add a catch in loadProductsfromfile?
+//Getproductbyid is ok?
 public class ProductService : IProductService
 {
     private List<Product> _items = [];
     private readonly IFileService _fileService;
+    private bool _loadedFilesAtStartUp = false;
 
     public ProductService(IFileService fileService)
     {
@@ -14,42 +19,118 @@ public class ProductService : IProductService
 
     public Product? GetProductById(string id)
     {
-        return _items.FirstOrDefault(product => product.ProductId.Equals(id));
-    }
-
-    public void AddProduct(string name, double price)
-    {
-        if (!DoesProductExist(name))
+        try
         {
-            _items.Add(new Product
-            {
-                Name = name,
-                Price = price,
-            });
-            SaveToFile();
+            return _items.FirstOrDefault(product => product.ProductId.Equals(id));
+        }
+        catch
+        {
+            return null;
         }
     }
 
-    public void AddProducts(List<Product> products)
+    public StatusCodes AddProduct(string name, string inputPrice)
     {
-        _items.AddRange(products);
+        try
+        {
+            if (string.IsNullOrWhiteSpace(name.Trim()))
+            {
+                return StatusCodes.Failed;
+            }
+            else if (DoesProductExist(name))
+            {
+                return StatusCodes.Exists;
+            }
+            else if (!(double.TryParse(inputPrice, out double price)))
+            {
+                return StatusCodes.Failed;
+            }
+            else
+            {
+                _items.Add(new Product
+                {
+                    Name = name,
+                    Price = price,
+                });
+                SaveToFile();
+
+                return StatusCodes.Success;
+            }
+        }
+        catch
+        {
+            return StatusCodes.Failed;
+        }
+    }
+
+    public void LoadProductsFromFile(List<Product> products)
+    {
+        try
+        {
+            if (_loadedFilesAtStartUp == false && products != null)
+            {
+                _items.AddRange(products);
+                _loadedFilesAtStartUp = true;
+            }
+        }
+        catch
+        {
+
+        }
+
+        ;
     }
 
     public void DeleteProductById(string id)
     {
-        _items.RemoveAll(product => product.ProductId.Equals(id));
-        SaveToFile();
-    }
-
-    public void UpdateProductById(string name, double price, string id)
-    {
-        int index = _items.FindIndex(product => product.ProductId.Equals(id));
-
-        if (index != -1)
+        try
         {
             _items.RemoveAll(product => product.ProductId.Equals(id));
-            _items.Insert(index, new Product() { Name = name, Price = price, ProductId = id });
             SaveToFile();
+        }
+        catch
+        {
+
+        }
+    }
+
+    public StatusCodes UpdateProductById(string name, string inputPrice, string id)
+    {
+
+        try
+        {
+            if (string.IsNullOrWhiteSpace(name.Trim()))
+            {
+                return StatusCodes.Failed;
+            }
+            else if (DoesProductExist(name))
+            {
+                return StatusCodes.Exists;
+            }
+            else if (!(double.TryParse(inputPrice, out double price)))
+            {
+                return StatusCodes.Failed;
+            }
+            else
+            {
+
+                int index = _items.FindIndex(product => product.ProductId.Equals(id));
+
+                if (index != -1)
+                {
+                    _items.RemoveAll(product => product.ProductId.Equals(id));
+                    _items.Insert(index, new Product() { Name = name, Price = price, ProductId = id });
+                    SaveToFile();
+
+                    return StatusCodes.Success;
+                }
+
+                return StatusCodes.NotFound;
+            }
+        }
+        catch
+        {
+            return StatusCodes.Failed;
         }
     }
 

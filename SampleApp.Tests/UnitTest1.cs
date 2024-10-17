@@ -23,7 +23,7 @@ public class UnitTest1
 
 
         //Act
-        _productService.AddProduct("John", 3);
+        _productService.AddProduct("John", "3");
         var objectsAfterAdding = _productService.GetAllProducts().ToList().Count;
 
         //Assert

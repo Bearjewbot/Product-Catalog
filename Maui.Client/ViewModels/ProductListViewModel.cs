@@ -1,4 +1,5 @@
 ﻿using Maui.Client.Views;
+using SampleApp.Library.Enums;
 using SampleApp.Library.Models;
 using SampleApp.Library.Services;
 using System.Collections.ObjectModel;
@@ -57,7 +58,8 @@ public class ProductListViewModel : INotifyPropertyChanged
 
     public void OnAppearing()
     {
-        _productService.AddProducts(_fileService.ReadFromFile());
+
+        _productService.LoadProductsFromFile(_fileService.ReadFromFile());
         PopulateProducts();
     }
 
@@ -70,22 +72,18 @@ public class ProductListViewModel : INotifyPropertyChanged
 
     public void AddProduct()
     {
-        if (string.IsNullOrWhiteSpace(Name))
+        var result = _productService.AddProduct(Name, Price);
+
+        if (result == StatusCodes.Failed)
         {
-            Shell.Current.DisplayAlert("Error", "You have to fill in the name in order to add a product.", "Try again");
+            AppShell.Current.DisplayAlert("Error", "There was an error, try to fill in both fields. Only numbers are allowed in the numbers field.", "Close");
         }
-        else if (_productService.DoesProductExist(Name))
+        else if (result == StatusCodes.Exists)
         {
-            Shell.Current.DisplayAlert("Error", "A product with that name already exists.", "Try again");
-        }
-        else if (!(double.TryParse(Price, out double price)))
-        {
-            Shell.Current.DisplayAlert("Error", "You have to fill in a price with numbers in order to add a product.", "Try again");
+            AppShell.Current.DisplayAlert("Error", "A product with that name already exists, try again.", "Close");
         }
         else
         {
-            _productService.AddProduct(Name.Trim(), price);
-
             Name = "";
             Price = "";
 
