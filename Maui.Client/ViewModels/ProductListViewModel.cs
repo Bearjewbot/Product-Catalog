@@ -70,17 +70,18 @@ public class ProductListViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    public void AddProduct()
+    //Gör addproduct async.
+    public async void AddProduct()
     {
         var result = _productService.AddProduct(Name, Price);
 
         if (result == StatusCodes.Failed)
         {
-            AppShell.Current.DisplayAlert("Error", "There was an error, try to fill in both fields. Only numbers are allowed in the numbers field.", "Close");
+            await AppShell.Current.DisplayAlert("Error", "There was an error, try to fill in both fields. Only numbers are allowed in the numbers field.", "Close");
         }
         else if (result == StatusCodes.Exists)
         {
-            AppShell.Current.DisplayAlert("Error", "A product with that name already exists, try again.", "Close");
+            await AppShell.Current.DisplayAlert("Error", "A product with that name already exists, try again.", "Close");
         }
         else
         {
@@ -102,9 +103,13 @@ public class ProductListViewModel : INotifyPropertyChanged
         await AppShell.Current.GoToAsync($"{nameof(EditProductPage)}?{nameof(Product.ProductId)}={product.ProductId}");
     }
 
-    private void PopulateProducts()
+
+    /// <summary>
+    ///  Ha kvar detta async?
+    /// </summary>
+    private async void PopulateProducts()
     {
-        Product[] fetchedProducts = _productService.GetAllProducts().ToArray();
+        Product[] fetchedProducts = await Task.Run(() => _productService.GetAllProducts().ToArray());
 
         Products.Clear();
         foreach (Product product in fetchedProducts)

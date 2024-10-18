@@ -63,7 +63,7 @@ public class ProductService : IProductService
         }
     }
 
-    public void LoadProductsFromFile(List<Product> products)
+    public StatusCodes LoadProductsFromFile(List<Product> products)
     {
         try
         {
@@ -71,16 +71,19 @@ public class ProductService : IProductService
             {
                 _items.AddRange(products);
                 _loadedFilesAtStartUp = true;
+
             }
+            return StatusCodes.Success;
         }
         catch
         {
-
+            return StatusCodes.Failed;
         }
 
         ;
     }
 
+    //FIXA
     public void DeleteProductById(string id)
     {
         try
@@ -96,7 +99,6 @@ public class ProductService : IProductService
 
     public StatusCodes UpdateProductById(string name, string inputPrice, string id)
     {
-
         try
         {
             if (string.IsNullOrWhiteSpace(name.Trim()))
@@ -141,7 +143,14 @@ public class ProductService : IProductService
 
     public bool DoesProductExist(string name)
     {
-        return _items.Exists(Product => Product.Name.Equals(name.Trim()));
+        try
+        {
+            return _items.Exists(Product => Product.Name.Equals(name.Trim()));
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     public void SaveToFile()

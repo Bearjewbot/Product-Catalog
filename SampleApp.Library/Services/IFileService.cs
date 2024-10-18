@@ -5,5 +5,5 @@ namespace SampleApp.Library.Services;
 public interface IFileService
 {
     List<Product> ReadFromFile();
-    void WriteToFile(List<Product> products);
+    bool WriteToFile(List<Product> products);
 }

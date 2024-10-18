@@ -7,7 +7,7 @@ public interface IProductService
     Product? GetProductById(string id);
     bool DoesProductExist(string name);
     StatusCodes AddProduct(string name, string inputPrice);
-    void LoadProductsFromFile(List<Product> products);
+    StatusCodes LoadProductsFromFile(List<Product> products);
     StatusCodes UpdateProductById(string name, string inputPrice, string id);
     void DeleteProductById(string id);
     void SaveToFile();

@@ -5,28 +5,45 @@ namespace SampleApp.Library.Services;
 
 public class FileService : IFileService
 {
-    private readonly string filePath;
+    private readonly string _filePath;
 
     public FileService(string filePath)
     {
-        this.filePath = filePath;
+        _filePath = filePath;
     }
 
     public List<Product> ReadFromFile()
     {
-        if (Path.Exists(filePath))
+        try
         {
-            var jsonString = File.ReadAllText(filePath);
-            List<Product> jsonList = JsonSerializer.Deserialize<List<Product>>(jsonString) ?? [];
-            return jsonList;
+            if (Path.Exists(_filePath))
+            {
+                var jsonString = File.ReadAllText(_filePath);
+                List<Product> jsonList = JsonSerializer.Deserialize<List<Product>>(jsonString) ?? [];
+                return jsonList;
+            }
+
+            return [];
+        }
+        catch
+        {
+            return [];
         }
 
-        return [];
+
     }
-    public void WriteToFile(List<Product> products)
+    public bool WriteToFile(List<Product> products)
     {
-        String jsonString = JsonSerializer.Serialize(products);
-        File.WriteAllText(filePath, jsonString);
+        try
+        {
+            String jsonString = JsonSerializer.Serialize(products);
+            File.WriteAllText(_filePath, jsonString);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
 }
