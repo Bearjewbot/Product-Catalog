@@ -10,7 +10,7 @@ public class ProductService : IProductService
 {
     private List<Product> _items = [];
     private readonly IFileService _fileService;
-    private bool _loadedFilesAtStartUp = false;
+
 
     public ProductService(IFileService fileService)
     {
@@ -31,13 +31,15 @@ public class ProductService : IProductService
 
     public StatusCodes AddProduct(string name, string inputPrice)
     {
+        var trimmedName = name.Trim();
+
         try
         {
-            if (string.IsNullOrWhiteSpace(name.Trim()))
+            if (string.IsNullOrWhiteSpace(trimmedName))
             {
                 return StatusCodes.Failed;
             }
-            else if (DoesProductExist(name))
+            else if (DoesProductExist(trimmedName))
             {
                 return StatusCodes.Exists;
             }
@@ -49,7 +51,7 @@ public class ProductService : IProductService
             {
                 _items.Add(new Product
                 {
-                    Name = name,
+                    Name = trimmedName,
                     Price = price,
                 });
                 SaveToFile();
@@ -67,11 +69,9 @@ public class ProductService : IProductService
     {
         try
         {
-            if (_loadedFilesAtStartUp == false && products != null)
+            if (products.Count != 0)
             {
                 _items.AddRange(products);
-                _loadedFilesAtStartUp = true;
-
             }
             return StatusCodes.Success;
         }
@@ -79,8 +79,6 @@ public class ProductService : IProductService
         {
             return StatusCodes.Failed;
         }
-
-        ;
     }
 
     //FIXA
@@ -99,13 +97,16 @@ public class ProductService : IProductService
 
     public StatusCodes UpdateProductById(string name, string inputPrice, string id)
     {
+
+        var trimmedName = name.Trim();
+
         try
         {
-            if (string.IsNullOrWhiteSpace(name.Trim()))
+            if (string.IsNullOrWhiteSpace(trimmedName))
             {
                 return StatusCodes.Failed;
             }
-            else if (DoesProductExist(name))
+            else if (DoesProductExist(trimmedName))
             {
                 return StatusCodes.Exists;
             }
@@ -121,7 +122,7 @@ public class ProductService : IProductService
                 if (index != -1)
                 {
                     _items.RemoveAll(product => product.ProductId.Equals(id));
-                    _items.Insert(index, new Product() { Name = name, Price = price, ProductId = id });
+                    _items.Insert(index, new Product() { Name = trimmedName, Price = price, ProductId = id });
                     SaveToFile();
 
                     return StatusCodes.Success;

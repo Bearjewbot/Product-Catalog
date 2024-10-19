@@ -11,12 +11,14 @@ namespace Maui.Client.ViewModels;
 
 public class ProductListViewModel : INotifyPropertyChanged
 {
-    private IProductService _productService;
-    private IFileService _fileService;
+    private readonly IProductService _productService;
+    private readonly IFileService _fileService;
 
     public ObservableCollection<Product> Products { get; }
 
+    private bool _loadedFilesAtStartup = false;
     private string _name = null!;
+
     public string Name
     {
         get => _name;
@@ -55,11 +57,14 @@ public class ProductListViewModel : INotifyPropertyChanged
 
     }
 
-
     public void OnAppearing()
     {
+        if (_loadedFilesAtStartup == false)
+        {
+            _productService.LoadProductsFromFile(_fileService.ReadFromFile());
+            _loadedFilesAtStartup = true;
+        }
 
-        _productService.LoadProductsFromFile(_fileService.ReadFromFile());
         PopulateProducts();
     }
 
@@ -117,9 +122,4 @@ public class ProductListViewModel : INotifyPropertyChanged
             Products.Add(product);
         }
     }
-
-
-
-
-
 }

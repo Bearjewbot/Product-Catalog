@@ -41,7 +41,7 @@
             <Button 
                 WidthRequest="80"
                 Text="Cancel"
-                BackgroundColor="Red"
+                BackgroundColor="Gray"
                 Command="{Binding CancelCommand}"/>
 
         </HorizontalStackLayout>
