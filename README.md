@@ -1,7 +1,7 @@
 Hej och välkommen till mitt projekt för c# kursen!
 
 Jag har då gjort projektet i .NET Maui men jag började först göra klar mycket funktionalitet i en console app där vissa delar då fortfarande är anpassade för Console också. 
-Jag lät min CLI.Client vara kvar men du kan bortse från den då jag inte fixade med meny strukturen osv eftersom jag redan har gjort det tidigare.
+Jag lät min CLI.Client vara kvar men du kan bortse från den då jag inte fixade med meny strukturen osv eftersom jag redan har gjort det tidigare. Vissa metoder i min kod returnar exempelvis statuskoder som jag inte använder mig av. Anledningen till att jag ändå returnerar något är för eventuell framtida implementering av funktionalitet. 
 
 Jag har under kursens gång använd mig mycket av olika resources främst i form av microsofts egen dokumentation på microsoft learn såsom exempelvis nedan sidor:
 
