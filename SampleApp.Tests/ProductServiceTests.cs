@@ -44,4 +44,27 @@ public class ProductServiceTests
         //Assert
         Assert.True(objectsAfterDeleted == (objectsBeforeDeleted - 1));
     }
+
+    [Fact]
+    public void UpdateAProductById_Then_ConfirmThatItHasBeenUpdated()
+    {
+        //Arrange
+        IFileService fileservice = new FileService(string.Empty);
+        IProductService productService = new ProductService(fileservice);
+
+        productService.AddProduct("John", "3");
+        var productListBeforeUpdate = productService.GetAllProducts().ToList();
+        var firstProduct = productListBeforeUpdate.First();
+        var productId = firstProduct.ProductId;
+
+        //Act
+        productService.UpdateProductById("Denny", "500", productId);
+        var productListAfterUpdate = productService.GetAllProducts().ToList();
+
+        //Assert
+        Assert.True(productListBeforeUpdate != productListAfterUpdate);
+
+
+    }
 }
+
