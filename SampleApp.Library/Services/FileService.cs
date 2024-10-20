@@ -1,4 +1,5 @@
-﻿using SampleApp.Library.Models;
+﻿using SampleApp.Library.Enums;
+using SampleApp.Library.Models;
 using System.Text.Json;
 
 namespace SampleApp.Library.Services;
@@ -22,27 +23,24 @@ public class FileService : IFileService
                 List<Product> jsonList = JsonSerializer.Deserialize<List<Product>>(jsonString) ?? [];
                 return jsonList;
             }
-
             return [];
         }
         catch
         {
             return [];
         }
-
-
     }
-    public bool WriteToFile(List<Product> products)
+    public StatusCodes WriteToFile(List<Product> products)
     {
         try
         {
             String jsonString = JsonSerializer.Serialize(products);
             File.WriteAllText(_filePath, jsonString);
-            return true;
+            return StatusCodes.Success;
         }
         catch
         {
-            return false;
+            return StatusCodes.Failed;
         }
     }
 

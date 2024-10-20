@@ -9,7 +9,7 @@ public interface IProductService
     StatusCodes AddProduct(string name, string inputPrice);
     StatusCodes LoadProductsFromFile(List<Product> products);
     StatusCodes UpdateProductById(string name, string inputPrice, string id);
-    void DeleteProductById(string id);
+    StatusCodes DeleteProductById(string id);
     void SaveToFile();
 
 }

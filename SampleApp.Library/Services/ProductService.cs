@@ -8,7 +8,7 @@ namespace SampleApp.Library.Services;
 //Getproductbyid is ok?
 public class ProductService : IProductService
 {
-    private List<Product> _items = [];
+    private readonly List<Product> _items = [];
     private readonly IFileService _fileService;
 
 
@@ -82,16 +82,17 @@ public class ProductService : IProductService
     }
 
     //FIXA
-    public void DeleteProductById(string id)
+    public StatusCodes DeleteProductById(string id)
     {
         try
         {
             _items.RemoveAll(product => product.ProductId.Equals(id));
             SaveToFile();
+            return StatusCodes.Success;
         }
         catch
         {
-
+            return StatusCodes.Failed;
         }
     }
 

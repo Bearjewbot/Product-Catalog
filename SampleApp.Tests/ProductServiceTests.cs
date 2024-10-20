@@ -1,5 +1,7 @@
-﻿using SampleApp.Library.Models;
+﻿using SampleApp.Library.Enums;
+using SampleApp.Library.Models;
 using SampleApp.Library.Services;
+
 
 
 namespace SampleApp.Tests;
@@ -8,7 +10,7 @@ namespace SampleApp.Tests;
 public class ProductServiceTests
 {
     [Fact]
-    public void AddNewProduct_Then_CheckIfAdded()
+    public void AddProduct__Should_CreateANewProductAndThenAddItToAListOfProducts__Return_StatusCodeSuccess()
     {
         //Arrange
         IFileService fileService = new FileService(string.Empty);
@@ -17,20 +19,21 @@ public class ProductServiceTests
 
 
         //Act
-        productService.AddProduct("John", "3");
+        var result = productService.AddProduct("John", "3");
         var objectsAfterAdding = productService.GetAllProducts().ToList().Count;
 
         //Assert
         Assert.True(objectsAfterAdding == (objectsBeforeAdding + 1));
+        Assert.True(result == StatusCodes.Success);
     }
 
 
     [Fact]
-    public void DeleteProductFromList_Then_ConfirmThatItHasBeenDeleted()
+    public void DeleteProduct__Should_DeleteAProductFromAListBasedOnItsId()
     {
         //Arrange
-        IFileService fileservice = new FileService(string.Empty);
-        IProductService productService = new ProductService(fileservice);
+        IFileService fileService = new FileService(string.Empty);
+        IProductService productService = new ProductService(fileService);
 
         productService.AddProduct("John", "3");
         var productList = productService.GetAllProducts().ToList();
@@ -48,7 +51,7 @@ public class ProductServiceTests
     }
 
     [Fact]
-    public void UpdateAProductById_Then_ConfirmThatItHasBeenUpdated()
+    public void UpdateProductById__Should_UpdateAProductInAListBasedOnItsId()
     {
         //Arrange
         IFileService fileservice = new FileService(string.Empty);
@@ -66,6 +69,25 @@ public class ProductServiceTests
         Assert.NotNull(productAfterUpdate);
         Assert.NotEqual(productBeforeUpdate.Name, productAfterUpdate.Name);
         Assert.NotEqual(productBeforeUpdate.Price, productAfterUpdate.Price);
+    }
+
+    [Fact]
+    public void SaveListToFileAndReadFromFile__Should_SaveAListToAFileAndThenReadItFromFile()
+    {
+        //Arrange
+        var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ProductList.json");
+
+        IFileService fileService = new FileService(filePath);
+        IProductService productService = new ProductService(fileService);
+
+        //Act
+        productService.AddProduct("John", "3");
+        var savedProductList = fileService.ReadFromFile();
+
+        //Assert
+        Assert.NotEmpty(savedProductList);
+
+
     }
 }
 
