@@ -1,4 +1,6 @@
-﻿using SampleApp.Library.Services;
+﻿using SampleApp.Library.Models;
+using SampleApp.Library.Services;
+
 
 namespace SampleApp.Tests;
 
@@ -53,18 +55,17 @@ public class ProductServiceTests
         IProductService productService = new ProductService(fileservice);
 
         productService.AddProduct("John", "3");
-        var productListBeforeUpdate = productService.GetAllProducts().ToList();
-        var firstProduct = productListBeforeUpdate.First();
-        var productId = firstProduct.ProductId;
+        var productBeforeUpdate = productService.GetAllProducts().ToList().First();
+        var productId = productBeforeUpdate.ProductId;
 
         //Act
         productService.UpdateProductById("Denny", "500", productId);
-        var productListAfterUpdate = productService.GetAllProducts().ToList();
+        Product? productAfterUpdate = productService.GetAllProducts().ToList().First();
 
         //Assert
-        Assert.True(productListBeforeUpdate != productListAfterUpdate);
-
-
+        Assert.NotNull(productAfterUpdate);
+        Assert.NotEqual(productBeforeUpdate.Name, productAfterUpdate.Name);
+        Assert.NotEqual(productBeforeUpdate.Price, productAfterUpdate.Price);
     }
 }
 
