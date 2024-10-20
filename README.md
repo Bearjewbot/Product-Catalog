@@ -6,6 +6,7 @@ Jag lät min CLI.Client vara kvar men du kan bortse från den då jag inte fixad
 Jag har under kursens gång använd mig mycket av olika resources främst i form av microsofts egen dokumentation på microsoft learn såsom exempelvis nedan sidor:
 
 https://learn.microsoft.com/en-us/training/modules/design-mvvm-viewmodel/
+
 https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/listview?view=net-maui-8.0
 
 För bättre förståelse av grunden av maui har jag använt mig av nedan video främst där jag då även valde att inte använda communityToolkit eftersom jag vill förstå grunderna först
