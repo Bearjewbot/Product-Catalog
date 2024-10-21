@@ -18,7 +18,7 @@ Jag måste erkänna att jag inte har hunnit titta på alla lektioner än, såsom
 dock beta av dem i närtid här nu. 
 
 Jag valde att inte gå all in på den grafiska delen eftersom jag känner att det inte är det viktigaste just nu. Jag har fortfarande många luckor i min kunskap och förstår inte 
-till 100% all funktionalitet såsom exempelvis Async och hur det implementeras bäst, men jag kämpar vidare. Jag ursäktar för att namnet på Solution är lite förvirrande vilket beror på att jag i början använde mig av codespaces vilket skapade mer problem än vad det löste kändes det som, men jag var tvungen då min gamla dator var alldeles för gammal. Sedan några veckor tillbaka har jag dock äntligen en bra mac där jag kör visual studio genom parallels desktop.
+till 100% all funktionalitet såsom exempelvis Async och hur det implementeras bäst, men jag kämpar vidare. Jag ursäktar för att namnet på Solution är lite förvirrande vilket beror på att jag i början använde mig av codespaces vilket skapade mer problem än vad det löste kändes det som, men jag var tvungen då min gamla dator var suuuper seg. Sedan några veckor tillbaka har jag dock äntligen en bra mac där jag kör visual studio genom parallels desktop.
 
 Hoppas allt är som det ska!
 
